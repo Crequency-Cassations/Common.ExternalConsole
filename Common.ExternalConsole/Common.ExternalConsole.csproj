@@ -6,4 +6,9 @@
         <Nullable>enable</Nullable>
     </PropertyGroup>
 
+    <ItemGroup>
+      <ProjectReference Include="..\Common.ExternalConsole.Console\Common.ExternalConsole.Console.csproj" />
+      <ProjectReference Include="..\Common.ExternalConsole.Server\Common.ExternalConsole.Server.csproj" />
+    </ItemGroup>
+
 </Project>
