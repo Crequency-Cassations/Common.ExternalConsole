@@ -67,6 +67,7 @@ public class AServer : IDisposable
                 while (_2SendMessages.Count > 0)
                 {
                     _streamWriter?.WriteLine(_2SendMessages.Dequeue());
+                    _streamWriter?.Flush();
                 }
             }
         }).Start();

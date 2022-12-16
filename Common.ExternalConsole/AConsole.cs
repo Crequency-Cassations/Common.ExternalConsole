@@ -17,9 +17,9 @@ public class AConsole : IDisposable
         set { _name = value; }
     }
 
-    public AConsole Start(string name, int bufferSize = 1024 * 1024)
+    public AConsole Start(int bufferSize = 1024 * 1024)
     {
-        _ = _server.Init(name, bufferSize);
+        _ = _server.Init(Name, bufferSize);
         _ = _server.Start();
         return this;
     }
