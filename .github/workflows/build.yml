@@ -14,17 +14,18 @@ jobs:
 
     steps:
 
-      - uses: actions/checkout@v3
+      - name: Checkout
+        uses: actions/checkout@v3
         with:
           submodules: 'true'
 
-      - name: Setup .NET
+      - name: Setup .NET SDK
         uses: actions/setup-dotnet@v2
         with:
           dotnet-version: '6.0.x'
           include-prerelease: false
 
-      - name: Build Contracts
+      - name: Build Common.ExternalConsole
         run: |
           cd "Common.ExternalConsole"
           dotnet build -c Release
