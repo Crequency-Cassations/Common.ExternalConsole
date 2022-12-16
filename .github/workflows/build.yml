@@ -31,6 +31,24 @@ jobs:
           dotnet build -c Release
           cd ".."
 
+      - name: Build Common.ExternalConsole.Server
+        run: |
+          cd "Common.ExternalConsole.Server"
+          dotnet build -c Release
+          cd ".."
+
+      - name: Build Common.ExternalConsole.Client
+        run: |
+          cd "Common.ExternalConsole.Client"
+          dotnet build -c Release
+          cd ".."
+
+      - name: Build Common.ExternalConsole.Console
+        run: |
+          cd "Common.ExternalConsole.Console"
+          dotnet build -c Release
+          cd ".."
+
       - name: Add to GitHub Repo
         run: |
           nuget sources add -name github -Source https://nuget.pkg.github.com/Crequency/index.json -Username Crequency -Password ${{ secrets.GitHubToken }}
@@ -40,9 +58,27 @@ jobs:
         with:
           nuget-version: '6.x'
 
-      - name: Publish Package
+      - name: Publish Packages
         run: |
           cd "Common.ExternalConsole"
+
+          nuget push ./bin/Release/*.nupkg -Source https://api.nuget.org/v3/index.json -SkipDuplicate -ApiKey ${{ secrets.NugetKey }} -NoSymbol
+          nuget push ./bin/Release/*.nupkg -Source github -SkipDuplicate
+
+          cd ".."
+          cd "Common.ExternalConsole.Server"
+
+          nuget push ./bin/Release/*.nupkg -Source https://api.nuget.org/v3/index.json -SkipDuplicate -ApiKey ${{ secrets.NugetKey }} -NoSymbol
+          nuget push ./bin/Release/*.nupkg -Source github -SkipDuplicate
+
+          cd ".."
+          cd "Common.ExternalConsole.Client"
+
+          nuget push ./bin/Release/*.nupkg -Source https://api.nuget.org/v3/index.json -SkipDuplicate -ApiKey ${{ secrets.NugetKey }} -NoSymbol
+          nuget push ./bin/Release/*.nupkg -Source github -SkipDuplicate
+
+          cd ".."
+          cd "Common.ExternalConsole.Console"
 
           nuget push ./bin/Release/*.nupkg -Source https://api.nuget.org/v3/index.json -SkipDuplicate -ApiKey ${{ secrets.NugetKey }} -NoSymbol
           nuget push ./bin/Release/*.nupkg -Source github -SkipDuplicate
