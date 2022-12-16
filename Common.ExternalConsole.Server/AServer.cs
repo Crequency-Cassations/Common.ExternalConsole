@@ -43,6 +43,7 @@ public class AServer : IDisposable
     public AServer Start()
     {
         if (!_isRunning) Init(_name, _bufferSize);
+        _isRunning = true;
 
         //  Read Thread
         new Thread(() =>
@@ -62,13 +63,14 @@ public class AServer : IDisposable
         {
             while (_isRunning)
             {
-                if (_pipeServer is not { CanRead: true }) continue;
+                if (_pipeServer is not { CanWrite: true }) continue;
                 while (_2SendMessages.Count > 0)
                 {
                     _streamWriter?.WriteLine(_2SendMessages.Dequeue());
                 }
             }
         }).Start();
+        
         return this;
     }
 
