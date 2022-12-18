@@ -16,6 +16,23 @@ ProcessStartInfo psi = new()
 };
 Process.Start(psi);
 
+new Thread(() =>
+{
+    try
+    {
+        while (true)
+        {
+            var remote = console.ReadLine();
+            if (remote is not null)
+                Console.WriteLine($"^ {remote}");
+        }
+    }
+    catch (Exception ex)
+    {
+        Console.WriteLine($"@ {ex.Message}");
+    }
+}).Start();
+
 while (true)
 {
     Console.Write("$ ");
