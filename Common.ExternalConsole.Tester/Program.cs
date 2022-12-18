@@ -7,6 +7,8 @@ var manager = new Manager();
 var console = manager.Register("Console");
 console.Start();
 
+var isWaiting = true;
+
 ProcessStartInfo psi = new()
 {
     FileName = Path.GetFullPath("./Common.ExternalConsole.Console.exe"),
@@ -23,8 +25,9 @@ new Thread(() =>
         while (true)
         {
             var remote = console.ReadLine();
-            if (remote is not null)
-                Console.WriteLine($"^ {remote}");
+            if (remote is null) continue;
+            Console.WriteLine($"{(isWaiting ? "\r\n" : "")}^ {remote}");
+            isWaiting = false;
         }
     }
     catch (Exception ex)
@@ -36,7 +39,9 @@ new Thread(() =>
 while (true)
 {
     Console.Write("$ ");
+    isWaiting = true;
     var input = Console.ReadLine();
+    isWaiting = false;
     if (input is null) continue;
     if (input == "exit") break;
     console.WriteLine(input);

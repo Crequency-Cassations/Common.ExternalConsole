@@ -4,6 +4,7 @@ Console.WriteLine("Common.ExternalConsole");
 Console.WriteLine(Environment.Version);
 
 var isRunning = true;
+var isWaiting = true;
 var pipeName = string.Empty;
 
 for (var i = 0; i < args.Length; i++)
@@ -38,12 +39,15 @@ new Thread(() =>
     while (isRunning)
     {
         Console.Write(">>> ");
+        isWaiting = true;
         var input = Console.ReadLine();
+        isWaiting = false;
         if (input == null) continue;
         switch (input)
         {
             case "exit":
                 isRunning = false;
+                Environment.Exit(0);
                 break;
             default:
                 client.WriteLine(input);
@@ -58,7 +62,9 @@ new Thread(() =>
     while (isRunning)
     {
         var output = client.ReadLine();
-        if (output is not null) Console.WriteLine(output);
+        if (output is null) continue;
+        Console.WriteLine($"{(isWaiting ? "\r\n" : "")}### {output}");
+        isWaiting = false;
     }
 }).Start();
 
