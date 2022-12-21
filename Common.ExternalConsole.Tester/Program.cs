@@ -8,6 +8,7 @@ var console = manager.Register("Console");
 console.Start();
 
 var isWaiting = true;
+var isRunning = true;
 
 ProcessStartInfo psi = new()
 {
@@ -22,10 +23,16 @@ new Thread(() =>
 {
     try
     {
-        while (true)
+        while (isRunning)
         {
             var remote = console.ReadLine();
             if (remote is null) continue;
+            if (remote.Equals("exit"))
+            {
+                Console.WriteLine("\r\n* Remote is offline.");
+                isRunning = false;
+                Environment.Exit(0);
+            }
             Console.WriteLine($"{(isWaiting ? "\r\n" : "")}^ {remote}");
             isWaiting = false;
         }
@@ -36,7 +43,7 @@ new Thread(() =>
     }
 }).Start();
 
-while (true)
+while (isRunning)
 {
     Console.Write("$ ");
     isWaiting = true;

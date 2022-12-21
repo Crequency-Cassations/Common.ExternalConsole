@@ -1,7 +1,7 @@
 ﻿using Common.ExternalConsole.Client;
 
 Console.WriteLine("Common.ExternalConsole");
-Console.WriteLine(Environment.Version);
+Console.WriteLine($"Runtime Version: {Environment.Version}");
 
 var isRunning = true;
 var isWaiting = true;
@@ -46,6 +46,7 @@ new Thread(() =>
         switch (input)
         {
             case "exit":
+                client.WriteLine("exit");
                 isRunning = false;
                 Environment.Exit(0);
                 break;
@@ -64,7 +65,7 @@ new Thread(() =>
         var output = client.ReadLine();
         if (output is null) continue;
         Console.WriteLine($"{(isWaiting ? "\r\n" : "")}### {output}");
-        isWaiting = false;
+        Console.Write(">>> ");
     }
 }).Start();
 
