@@ -67,6 +67,7 @@ new Thread(() =>
         if (output.Equals("exit"))
         {
             Console.WriteLine($"\r\n*** Remote request to exist.");
+            isRunning = false;
             Environment.Exit(0);
         }
 
