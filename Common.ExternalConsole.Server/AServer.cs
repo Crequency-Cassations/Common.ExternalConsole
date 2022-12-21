@@ -48,27 +48,41 @@ public class AServer : IDisposable
         //  Read Thread
         new Thread(() =>
         {
-            _pipeServer?.WaitForConnection();
-            while (_isRunning)
+            try
             {
-                if (_pipeServer is { CanRead: true })
+                _pipeServer?.WaitForConnection();
+                while (_isRunning)
                 {
-                    _receivedMessages.Enqueue(_streamReader?.ReadLine() ?? "null");
+                    if (_pipeServer is { CanRead: true })
+                    {
+                        _receivedMessages.Enqueue(_streamReader?.ReadLine() ?? "null");
+                    }
                 }
+            }
+            catch (Exception ex)
+            {
+                
             }
         }).Start();
 
         //  Write Thread
         new Thread(() =>
         {
-            while (_isRunning)
+            try
             {
-                if (_pipeServer is not { CanWrite: true }) continue;
-                while (_2SendMessages.Count > 0)
+                while (_isRunning)
                 {
-                    _streamWriter?.WriteLine(_2SendMessages.Dequeue());
-                    _streamWriter?.Flush();
+                    if (_pipeServer is not { CanWrite: true }) continue;
+                    while (_2SendMessages.Count > 0)
+                    {
+                        _streamWriter?.WriteLine(_2SendMessages.Dequeue());
+                        _streamWriter?.Flush();
+                    }
                 }
+            }
+            catch (Exception ex)
+            {
+                
             }
         }).Start();
         
