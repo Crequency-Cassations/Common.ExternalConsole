@@ -64,6 +64,12 @@ new Thread(() =>
     {
         var output = client.ReadLine();
         if (output is null) continue;
+        if (output.Equals("exit"))
+        {
+            Console.WriteLine($"\r\n*** Remote request to exist.");
+            Environment.Exit(0);
+        }
+
         Console.WriteLine($"{(isWaiting ? "\r\n" : "")}### {output}");
         Console.Write(">>> ");
     }
