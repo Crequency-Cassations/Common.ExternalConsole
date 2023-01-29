@@ -12,6 +12,8 @@ public class AServer : IDisposable
     private readonly Queue<string> _2SendMessages = new();
     private string _name = string.Empty;
     private int _bufferSize = 1024 * 1024;
+    private string _ex1 = string.Empty;
+    private string _ex2 = string.Empty;
 
     public AServer()
     {
@@ -61,7 +63,8 @@ public class AServer : IDisposable
             }
             catch (Exception ex)
             {
-                
+                _ex1 = ex.Message;
+                _ex2 = _ex1;
             }
         }).Start();
 
@@ -82,7 +85,8 @@ public class AServer : IDisposable
             }
             catch (Exception ex)
             {
-                
+                _ex2 = ex.Message;
+                _ex1 = _ex2;
             }
         }).Start();
         
@@ -124,5 +128,7 @@ public class AServer : IDisposable
         _streamReader?.Dispose();
         _streamWriter?.Dispose();
         _pipeServer?.Dispose();
+
+        GC.SuppressFinalize(this);
     }
 }
