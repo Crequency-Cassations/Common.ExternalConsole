@@ -1,4 +1,8 @@
-﻿using Common.ExternalConsole.Client;
+﻿using System.Text;
+using Common.ExternalConsole.Client;
+
+Console.OutputEncoding = Encoding.UTF8;
+Console.InputEncoding = Encoding.UTF8;
 
 Console.WriteLine("Common.ExternalConsole");
 Console.WriteLine($"Runtime Version: {Environment.Version}");
