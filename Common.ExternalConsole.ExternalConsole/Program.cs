@@ -27,7 +27,12 @@ await client.ConnectAsync(serverAddress, port);
 
 Console.WriteLine($"Connected to {serverAddress}:{port} .");
 
-void Stop() => keepWorking = false;
+void Stop()
+{
+    keepWorking = false;
+    client.Close();
+    Environment.Exit(0);
+}
 
 //  Receive messages. 
 async void ReceiveMessages()
@@ -82,7 +87,7 @@ async void SendMessages()
     }
 }
 
-void HandleUserInterface()
+async void HandleUserInterface()
 {
     while (keepWorking)
     {
@@ -96,7 +101,13 @@ void HandleUserInterface()
         {
             case null: continue;
             case "exit":
-                Stop();
+                messages2Send?.Enqueue(@"|^console_exit|");
+
+                await Task.Run(() =>
+                {
+                    Task.Delay(1000);
+                    Stop();
+                });
                 break;
             case @"|^disable_debug|":
                 PromptHelper.DebugEnabled = false;
