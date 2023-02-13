@@ -1,12 +1,13 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
+        <OutputType>Exe</OutputType>
         <TargetFramework>net6.0</TargetFramework>
         <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>enable</Nullable>
         <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
         <Authors>Crequency</Authors>
-        <Description>外置的控制台的客户端, 用于与调用方通信</Description>
+        <Description>外置的控制台, 直接与用户交互的部分</Description>
         <PackageProjectUrl>https://github.com/Crequency/Common.ExternalConsole</PackageProjectUrl>
         <RepositoryUrl>https://github.com/Crequency/Common.ExternalConsole</RepositoryUrl>
         <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>

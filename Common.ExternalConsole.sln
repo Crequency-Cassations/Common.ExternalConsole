@@ -1,14 +1,12 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Common.ExternalConsole.Console", "Common.ExternalConsole.Console\Common.ExternalConsole.Console.csproj", "{74265B86-0F7D-4689-88AC-2D6C4C156539}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Common.ExternalConsole.Server", "Common.ExternalConsole.Server\Common.ExternalConsole.Server.csproj", "{31203FB8-D331-451D-9565-4E504BD4ECAB}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Common.ExternalConsole", "Common.ExternalConsole\Common.ExternalConsole.csproj", "{4914B0B0-83AE-4CE2-80F9-85978F0909FA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Common.ExternalConsole.Client", "Common.ExternalConsole.Client\Common.ExternalConsole.Client.csproj", "{1B786108-85E2-42E6-9D88-F4255EE98925}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Common.ExternalConsole.Tester", "Common.ExternalConsole.Tester\Common.ExternalConsole.Tester.csproj", "{9E37032C-2C21-4D0F-8B6C-53D3EF523A18}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Common.ExternalConsole.ExternalConsole", "Common.ExternalConsole.ExternalConsole\Common.ExternalConsole.ExternalConsole.csproj", "{5C6C6DF3-1407-4CF0-9A03-13E6EFF85401}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -16,10 +14,6 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{74265B86-0F7D-4689-88AC-2D6C4C156539}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{74265B86-0F7D-4689-88AC-2D6C4C156539}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{74265B86-0F7D-4689-88AC-2D6C4C156539}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{74265B86-0F7D-4689-88AC-2D6C4C156539}.Release|Any CPU.Build.0 = Release|Any CPU
 		{31203FB8-D331-451D-9565-4E504BD4ECAB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{31203FB8-D331-451D-9565-4E504BD4ECAB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{31203FB8-D331-451D-9565-4E504BD4ECAB}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -28,13 +22,13 @@ Global
 		{4914B0B0-83AE-4CE2-80F9-85978F0909FA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4914B0B0-83AE-4CE2-80F9-85978F0909FA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4914B0B0-83AE-4CE2-80F9-85978F0909FA}.Release|Any CPU.Build.0 = Release|Any CPU
-		{1B786108-85E2-42E6-9D88-F4255EE98925}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{1B786108-85E2-42E6-9D88-F4255EE98925}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{1B786108-85E2-42E6-9D88-F4255EE98925}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{1B786108-85E2-42E6-9D88-F4255EE98925}.Release|Any CPU.Build.0 = Release|Any CPU
 		{9E37032C-2C21-4D0F-8B6C-53D3EF523A18}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{9E37032C-2C21-4D0F-8B6C-53D3EF523A18}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9E37032C-2C21-4D0F-8B6C-53D3EF523A18}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9E37032C-2C21-4D0F-8B6C-53D3EF523A18}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5C6C6DF3-1407-4CF0-9A03-13E6EFF85401}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5C6C6DF3-1407-4CF0-9A03-13E6EFF85401}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5C6C6DF3-1407-4CF0-9A03-13E6EFF85401}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5C6C6DF3-1407-4CF0-9A03-13E6EFF85401}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

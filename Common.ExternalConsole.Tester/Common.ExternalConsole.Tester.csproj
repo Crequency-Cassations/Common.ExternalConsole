@@ -8,8 +8,7 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\Common.ExternalConsole.Client\Common.ExternalConsole.Client.csproj" />
-      <ProjectReference Include="..\Common.ExternalConsole.Console\Common.ExternalConsole.Console.csproj" />
+      <ProjectReference Include="..\Common.ExternalConsole.ExternalConsole\Common.ExternalConsole.ExternalConsole.csproj" />
       <ProjectReference Include="..\Common.ExternalConsole\Common.ExternalConsole.csproj" />
     </ItemGroup>
 
