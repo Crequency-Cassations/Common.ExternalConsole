@@ -1,4 +1,4 @@
-namespace Common.ExternalConsole.ExternalConsole;
+﻿namespace Common.ExternalConsole.ExternalConsole;
 
 public static class PromptHelper
 {
@@ -21,7 +21,7 @@ public static class PromptHelper
         set => _debugPrompt = value;
     }
 
-    public static bool DebugEnabled { get; set; } = true; 
+    public static bool DebugEnabled { get; set; } = false;
 
     private static void Action(Action action, ConsoleColor cc = ConsoleColor.White)
     {
