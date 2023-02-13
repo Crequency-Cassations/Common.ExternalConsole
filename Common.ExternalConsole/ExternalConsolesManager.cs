@@ -7,10 +7,12 @@ public class ExternalConsolesManager
     private readonly object _consolesCollectionLock = new();
     private readonly Dictionary<string, ExternalConsole> _consoles = new();
     private readonly ConsolesServer _consolesServer = new();
+    private bool _serverLaunched = false;
+
+    public bool ServerLaunched => _serverLaunched;
 
     public ExternalConsolesManager()
     {
-            
     }
 
     /// <summary>
@@ -73,8 +75,7 @@ public class ExternalConsolesManager
     public async Task<ExternalConsolesManager> LaunchServer(int port = 0)
     {
         await _consolesServer.StartListen(port);
-
+        _serverLaunched = true;
         return this;
     }
-
 }
