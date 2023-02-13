@@ -165,6 +165,8 @@ public class ConsolesServer : IDisposable
         client.Close();
         client.Dispose();
         _tcpClients.Remove(name);
+        _tcpStreams.Remove(name);
+        GC.Collect();
         return this;
     }
 
