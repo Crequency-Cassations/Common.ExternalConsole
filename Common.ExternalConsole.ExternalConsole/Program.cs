@@ -5,8 +5,8 @@ using Common.ExternalConsole.ExternalConsole;
 Console.InputEncoding = Encoding.UTF8;
 Console.OutputEncoding = Encoding.UTF8;
 
-Console.WriteLine("Common.ExternalConsole v2");
-Console.WriteLine($"Runtime Version: {Environment.Version}");
+PromptHelper.Print("Common.ExternalConsole v2");
+PromptHelper.Print($"Runtime Version: {Environment.Version}");
 
 const string serverAddress = "127.0.0.1";
 const string consoleTitle = "Common.ExternalConsole.Console | Name: ";
@@ -20,12 +20,12 @@ var keepWorking = true;
 var messages2Send = new Queue<string>();
 var messages2SendLock = new object();
 
-Console.WriteLine("Init client and network connection ...");
+PromptHelper.Print("Init client and network connection ...");
 
 var client = new TcpClient();
 await client.ConnectAsync(serverAddress, port);
 
-Console.WriteLine($"Connected to {serverAddress}:{port} .");
+PromptHelper.Print($"Connected to {serverAddress}:{port} .");
 
 void Stop()
 {
@@ -42,6 +42,7 @@ async void ReceiveMessages()
     while (keepWorking)
     {
         if (client.Available <= 0) continue;
+
         var message = await sr.ReadLineAsync();
 
         PromptHelper.Debug($"Receive: {message}");
@@ -53,10 +54,14 @@ async void ReceiveMessages()
             case @"|^stop_console|":
                 Stop();
                 break;
+            case @"|^console_clear|":
+                Console.Clear();
+                break;
+            default:
+                message = message.Replace("|^new_line|", Environment.NewLine);
+                PromptHelper.Remote(message);
+                break;
         }
-
-        // if (isWaitingInput) MoveCursorToLineStart();
-        PromptHelper.Remote(message);
     }
 
     sr.Close();
@@ -84,6 +89,7 @@ async void SendMessages()
         if (!keepWorking) Stop();
 
         await sw.FlushAsync();
+        await ns.FlushAsync();
     }
 }
 

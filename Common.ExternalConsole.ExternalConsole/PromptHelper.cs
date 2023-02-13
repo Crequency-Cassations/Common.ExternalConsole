@@ -6,6 +6,8 @@ public static class PromptHelper
     private static string _remotePrompt = "# ";
     private static string _debugPrompt = "& ";
 
+    public static object ConsoleWriteLock = new();
+
     public static string UserPrompt
     {
         set => _userPrompt = value;
@@ -31,21 +33,30 @@ public static class PromptHelper
         Console.ForegroundColor = originColor;
     }
 
-    public static void User() => Console.Write("$ ");
+    public static void User() => Print("$ ", false);
 
     private static void Normally(string prompt, string content, ConsoleColor cc = ConsoleColor.White,
-        Action<(int Left, int Top)>? action = null, bool disableLineStartCheck = false)
+        Action<(int Left, int Top), string[]>? action = null, bool disableLineStartCheck = false)
     {
-        var position = Console.GetCursorPosition();
-        if (!disableLineStartCheck && position.Left != 0)
-            Console.WriteLine();
-
-        Action(() =>
+        lock (ConsoleWriteLock)
         {
-            Console.Write(prompt);
-            Console.WriteLine(content);
-        }, cc);
-        action?.Invoke(position);
+            var position = Console.GetCursorPosition();
+            if (!disableLineStartCheck && position.Left != 0)
+                Console.WriteLine();
+
+            var lines = content.Split('\n');
+
+            Action(() =>
+            {
+                if (lines is null) return;
+                foreach (var line in lines)
+                {
+                    Console.Write(prompt);
+                    Console.WriteLine(line);
+                }
+            }, cc);
+            action?.Invoke(position, lines);
+        }
     }
 
     public static void Local(string content, ConsoleColor cc = ConsoleColor.White) =>
@@ -53,9 +64,11 @@ public static class PromptHelper
 
     public static void Remote(string content, ConsoleColor cc = ConsoleColor.Cyan)
         => Normally(_remotePrompt ?? "# ", content, cc,
-            (position) =>
+            (position, lines) =>
             {
-                Console.SetCursorPosition(0, position.Top);
+                var top = position.Top + lines.Length + 1;
+                top = top >= Console.BufferHeight ? Console.BufferHeight - 1 : top;
+                Console.SetCursorPosition(0, top);
                 User();
             });
 
@@ -64,11 +77,22 @@ public static class PromptHelper
         if (DebugEnabled)
         {
             Normally(_debugPrompt ?? "& ", content, cc,
-                (position) =>
+                (position, lines) =>
                 {
-                    Console.SetCursorPosition(0, position.Top);
+                    var top = position.Top + lines.Length + 1;
+                    top = top >= Console.BufferHeight ? Console.BufferHeight - 1 : top;
+                    Console.SetCursorPosition(0, top);
                     User();
                 });
+        }
+    }
+
+    public static void Print(string content, bool newLine = true)
+    {
+        lock (ConsoleWriteLock)
+        {
+            if (newLine) Console.WriteLine(content);
+            else Console.Write(content);
         }
     }
 }
