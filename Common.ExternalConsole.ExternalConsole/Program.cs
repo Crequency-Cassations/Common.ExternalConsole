@@ -57,6 +57,12 @@ async void ReceiveMessages()
             case @"|^console_clear|":
                 Console.Clear();
                 break;
+            case @"|^disable_debug|":
+                PromptHelper.DebugEnabled = false;
+                break;
+            case @"|^enable_debug|":
+                PromptHelper.DebugEnabled = true;
+                break;
             default:
                 message = message.Replace("|^new_line|", Environment.NewLine);
                 PromptHelper.Remote(message);
