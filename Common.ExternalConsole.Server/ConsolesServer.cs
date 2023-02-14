@@ -92,7 +92,7 @@ public class ConsolesServer : IDisposable
         }
 
         var ns = client.GetStream();
-        var sr = new StreamReader(ns);
+        var sr = new StreamReader(ns, Encoding.UTF8);
 
         async void CancelThis()
         {
@@ -115,7 +115,7 @@ public class ConsolesServer : IDisposable
             var name = msg[ConsoleTitle.Length..];
             _tcpClients.Add(name, client);
 
-            var sw = new StreamWriter(ns);
+            var sw = new StreamWriter(ns, Encoding.UTF8);
             await sw.WriteLineAsync("Welcome to Common.ExternalConsole!");
             await sw.FlushAsync();
 

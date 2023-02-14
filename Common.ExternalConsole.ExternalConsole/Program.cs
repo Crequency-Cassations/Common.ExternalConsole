@@ -38,7 +38,7 @@ void Stop()
 async void ReceiveMessages()
 {
     await using var ns = client.GetStream();
-    using var sr = new StreamReader(ns);
+    using var sr = new StreamReader(ns, Encoding.UTF8);
     while (keepWorking)
     {
         if (client.Available <= 0) continue;
@@ -78,7 +78,7 @@ async void ReceiveMessages()
 async void SendMessages()
 {
     await using var ns = client.GetStream();
-    await using var sw = new StreamWriter(ns);
+    await using var sw = new StreamWriter(ns, Encoding.UTF8);
     while (keepWorking)
     {
         lock (messages2SendLock)
