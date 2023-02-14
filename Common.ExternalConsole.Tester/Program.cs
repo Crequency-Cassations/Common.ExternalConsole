@@ -1,57 +1,49 @@
-﻿using System.Diagnostics;
-using Common.ExternalConsole;
+﻿using Common.ExternalConsole;
 
 Console.WriteLine("Hello, Common.ExternalConsole!");
 
-var manager = new Manager();
-var console = manager.Register("Console");
-console.Start();
+var manager = await new ExternalConsolesManager()
+        .LaunchServer(7777)
+    ;
 
-var isWaiting = true;
-var isRunning = true;
+var name = "1";
 
-ProcessStartInfo psi = new()
+var console = manager.Register(name);
+
+var keepWorking = true;
+var messages2Send = new Queue<string>();
+
+async void Reader(StreamReader reader)
 {
-    FileName = Path.GetFullPath("./Common.ExternalConsole.Console.exe"),
-    Arguments = "--connect CommonExternalConsoleConsole",
-    CreateNoWindow = false,
-    UseShellExecute = true,
-};
-Process.Start(psi);
-
-new Thread(() =>
-{
-    try
+    while (keepWorking)
     {
-        while (isRunning)
+        var message = await reader.ReadLineAsync();
+        switch (message)
         {
-            var remote = console.ReadLine();
-            if (remote is null) continue;
-            if (remote.Equals("exit"))
-            {
-                Console.WriteLine("\r\n* Remote is offline.");
-                isRunning = false;
-                Environment.Exit(0);
-            }
-            Console.WriteLine($"{(isWaiting ? "\r\n" : "")}^ {remote}");
-            isWaiting = false;
+            case @"|^console_exit|":
+                keepWorking = false;
+                Console.WriteLine("logout");
+                break;
+            default:
+                Console.WriteLine(message);
+                break;
         }
     }
-    catch (Exception ex)
-    {
-        Console.WriteLine($"@ {ex.Message}");
-    }
-}).Start();
-
-while (isRunning)
-{
-    Console.Write("$ ");
-    isWaiting = true;
-    var input = Console.ReadLine();
-    isWaiting = false;
-    if (input is null) continue;
-    if (input == "exit") break;
-    console.WriteLine(input);
 }
 
-manager.RemoveConsole("Console");
+async void Writer(StreamWriter writer)
+{
+    while (keepWorking)
+    {
+        if (messages2Send.Count > 0)
+        {
+            await writer.WriteLineAsync(messages2Send.Dequeue());
+            await writer.FlushAsync();
+        }
+    }
+}
+
+console.HandleMessages(Reader, Writer);
+
+while (true)
+    messages2Send.Enqueue(Console.ReadLine() ?? "null");
