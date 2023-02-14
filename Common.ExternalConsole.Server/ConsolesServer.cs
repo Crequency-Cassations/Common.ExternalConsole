@@ -137,21 +137,16 @@ public class ConsolesServer : IDisposable
     /// </summary>
     /// <param name="name">Name</param>
     /// <returns>TcpClient instance</returns>
-    public TcpClient? GetClient(string name)
-    {
-        return _tcpClients.TryGetValue(name, out var result) ? result : null;
-    }
+    public TcpClient? GetClient(string name) => _tcpClients
+        .TryGetValue(name, out var result) ? result : null;
 
     /// <summary>
     /// Get two streams about a StreamReader and a StreamWriter of specific client by name. 
     /// </summary>
     /// <param name="name">Client name</param>
     /// <returns>Two streams in a record</returns>
-    public StreamsRecord? GetStreams(string name)
-    {
-        return _tcpStreams.ContainsKey(name) ? _tcpStreams[name] : null;
-        return _tcpStreams.TryGetValue(name, out var streams) ? streams : null;
-    }
+    public StreamsRecord? GetStreams(string name) => _tcpStreams
+        .TryGetValue(name, out var streams) ? streams : null;
 
     /// <summary>
     /// Disconnect a client by name.
