@@ -37,15 +37,9 @@ jobs:
           dotnet build -c Release
           cd ".."
 
-      - name: Build Common.ExternalConsole.Client
+      - name: Build Common.ExternalConsole.ExternalConsole
         run: |
-          cd "Common.ExternalConsole.Client"
-          dotnet build -c Release
-          cd ".."
-
-      - name: Build Common.ExternalConsole.Console
-        run: |
-          cd "Common.ExternalConsole.Console"
+          cd "Common.ExternalConsole.ExternalConsole"
           dotnet build -c Release
           cd ".."
 
@@ -66,19 +60,15 @@ jobs:
           nuget push ./bin/Release/*.nupkg -Source github -SkipDuplicate
 
           cd ".."
+
           cd "Common.ExternalConsole.Server"
 
           nuget push ./bin/Release/*.nupkg -Source https://api.nuget.org/v3/index.json -SkipDuplicate -ApiKey ${{ secrets.NugetKey }} -NoSymbol
           nuget push ./bin/Release/*.nupkg -Source github -SkipDuplicate
 
           cd ".."
-          cd "Common.ExternalConsole.Client"
 
-          nuget push ./bin/Release/*.nupkg -Source https://api.nuget.org/v3/index.json -SkipDuplicate -ApiKey ${{ secrets.NugetKey }} -NoSymbol
-          nuget push ./bin/Release/*.nupkg -Source github -SkipDuplicate
-
-          cd ".."
-          cd "Common.ExternalConsole.Console"
+          cd "Common.ExternalConsole.ExternalConsole"
 
           nuget push ./bin/Release/*.nupkg -Source https://api.nuget.org/v3/index.json -SkipDuplicate -ApiKey ${{ secrets.NugetKey }} -NoSymbol
           nuget push ./bin/Release/*.nupkg -Source github -SkipDuplicate
