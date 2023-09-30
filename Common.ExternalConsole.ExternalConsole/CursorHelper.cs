@@ -1,4 +1,4 @@
-namespace Common.ExternalConsole.ExternalConsole;
+﻿namespace Common.ExternalConsole.ExternalConsole;
 
 public static class CursorHelper
 {
@@ -6,34 +6,34 @@ public static class CursorHelper
 
     public static void MoveCursorAbove(int distance = 1)
     {
-        var position = Console.GetCursorPosition();
-        var endPoint = position.Top - distance;
-        Console.SetCursorPosition(position.Left, endPoint >= 0 ? endPoint : 0);
+        var (Left, Top) = Console.GetCursorPosition();
+        var endPoint = Top - distance;
+        Console.SetCursorPosition(Left, endPoint >= 0 ? endPoint : 0);
     }
 
     public static void MoveCursorDown(int distance = 1)
     {
-        var position = Console.GetCursorPosition();
-        var endPoint = position.Top + distance;
-        Console.SetCursorPosition(position.Left,
+        var (Left, Top) = Console.GetCursorPosition();
+        var endPoint = Top + distance;
+        Console.SetCursorPosition(Left,
             endPoint <= Console.BufferHeight ? endPoint : Console.BufferHeight
         );
     }
 
     public static void MoveCursorLeft(int distance = 1)
     {
-        var position = Console.GetCursorPosition();
-        var endPoint = position.Left - distance;
-        Console.SetCursorPosition(endPoint >= 0 ? endPoint : 0, position.Top);
+        var (Left, Top) = Console.GetCursorPosition();
+        var endPoint = Left - distance;
+        Console.SetCursorPosition(endPoint >= 0 ? endPoint : 0, Top);
     }
 
     public static void MoveCursorRight(int distance = 1)
     {
-        var position = Console.GetCursorPosition();
-        var endPoint = position.Left + distance;
+        var (Left, Top) = Console.GetCursorPosition();
+        var endPoint = Left + distance;
         Console.SetCursorPosition(
             endPoint <= Console.BufferWidth ? endPoint : Console.BufferWidth,
-            position.Top
+            Top
         );
     }
 }
