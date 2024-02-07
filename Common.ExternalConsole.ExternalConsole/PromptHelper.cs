@@ -6,7 +6,7 @@ public static class PromptHelper
     private static string _remotePrompt = "# ";
     private static string _debugPrompt = "& ";
 
-    public static object ConsoleWriteLock = new();
+    internal static object ConsoleWriteLock = new();
 
     public static string UserPrompt
     {
